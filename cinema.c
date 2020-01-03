@@ -64,7 +64,11 @@ void clockTime(char time[],int *hour, int *min, int *sec)
 }
 struct Sons
 {
-
+    char structDate[200];
+    int hour;
+    int min;
+    int sec;
+    int freeSeats;
 };
 struct Auditorium
 {
@@ -80,6 +84,6 @@ int main()
     date(time);
     todayDate(time,today);
     clockTime(time,&hour,&min,&sec);
-    printf("%d : %d : %d",hour,min,sec);
+    //printf("%d : %d : %d",hour,min,sec);
     //printf("%s",today);
 }
