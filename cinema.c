@@ -30,6 +30,20 @@ void date(char time2[])
     // exit(EXIT_SUCCESS);
     
 }
+void todayDate(char time[],char today[])
+{
+    int cnt = 0;
+    int i;
+    for(i = 0;cnt < 3;i++)
+    {
+        today[i] = time[i];
+        if(time[i] == ' ')
+        {
+            cnt++;
+        }
+    }
+    today[i] = '\0';
+}
 struct Sons
 {
 
@@ -43,6 +57,8 @@ struct Auditorium
 int main()
 {
     char time[200];
+    char today[100];
     date(time);
-    printf("%s",time);
+    todayDate(time,today);
+    //printf("%s",today);
 }
