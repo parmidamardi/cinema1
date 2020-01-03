@@ -157,7 +157,7 @@ void auditoriumFill(struct Auditorium *Salon)
         Salon[2].TodaySons[i].freeSeats = 36; 
     }
 }
-void salonPrint(struct Auditorium *Salon,int numSalon)
+void salonPrint(struct Auditorium *Salon,struct Movie *M,int numSalon)
 {
     for(int i = 0; i < 7;i++)
     {
@@ -175,7 +175,10 @@ void salonPrint(struct Auditorium *Salon,int numSalon)
             }
             printf("%s\n",Salon[numSalon-1].TodaySons[i].structDate);
             printf("saat: %d : %d : %d\n",Salon[numSalon-1].TodaySons[i].hour,Salon[numSalon-1].TodaySons[i].min,Salon[numSalon-1].TodaySons[i].sec);
-
+            printf("Movie :%s\n",M[numSalon-1].movieName);
+            printf("zamane film : %d hours\n",M[numSalon-1].movieTime);
+            printf("kholase :%s\n",M[numSalon-1].summary);
+            printf("jenre: :%s\n",M[numSalon-1].movieJenre);  
         }
     }
 }
@@ -208,7 +211,7 @@ int main()
             printf("shomare vared shode eshtebah ast\nshomare mored nazar:");
             scanf("%d",&numSalon);
         }         
-        salonPrint(Salon,numSalon);
+        salonPrint(Salon,M,numSalon);
     }
     else
     {
