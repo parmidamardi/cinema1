@@ -108,7 +108,7 @@ struct Movie movieFill(struct Movie M,int num)
     }
     return M;
 }
-int main()
+void auditoriumFill(struct Auditorium *Salon)
 {
     char time[200];
     char today[100];
@@ -116,7 +116,52 @@ int main()
     date(time);
     todayDate(time,today);
     clockTime(time,&hour,&min,&sec);
+    for(int i = 0;i < 6;i++)
+    {
+        for(int j = 0;j < 6;j++)
+        {
+            Salon[0].seats[i][j] = '*';
+            Salon[1].seats[i][j] = '*';
+            Salon[2].seats[i][j] = '*';
+        }
+    }
+    strcpy(Salon[0].movieName,"The Green Mile");
+    strcpy(Salon[1].movieName,"The prestige");
+    strcpy(Salon[2].movieName,"shutter island");
+    for(int i = 0;i < 7;i++)
+    {
+
+        strcpy(Salon[0].TodaySons[i].structDate,today);
+        strcpy(Salon[1].TodaySons[i].structDate,today);
+        strcpy(Salon[2].TodaySons[i].structDate,today);
+        if(i < 3)
+        {
+            Salon[0].TodaySons[i].hour = 10 + (i*2);
+            Salon[1].TodaySons[i].hour = 10 + (i*3);
+            Salon[2].TodaySons[i].hour = 10 + (i*2);
+        }
+        else
+        {
+            Salon[0].TodaySons[i].hour = 0;
+            Salon[1].TodaySons[i].hour = 0;
+            Salon[2].TodaySons[i].hour = 0;            
+        }
+        Salon[0].TodaySons[i].min = 0;
+        Salon[1].TodaySons[i].min = 0;
+        Salon[2].TodaySons[i].min = 0;
+        Salon[0].TodaySons[i].sec = 0;
+        Salon[1].TodaySons[i].sec = 0;
+        Salon[2].TodaySons[i].sec = 0;
+        Salon[0].TodaySons[i].freeSeats = 36;
+        Salon[1].TodaySons[i].freeSeats = 36;
+        Salon[2].TodaySons[i].freeSeats = 36; 
+    }
+}
+int main()
+{
     struct Movie M[3];
+    struct Auditorium Salon[3];
+    auditoriumFill(Salon);
     M[0] = movieFill(M[0],0);
     M[1] = movieFill(M[1],1);
     M[2] = movieFill(M[2],2);
