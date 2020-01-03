@@ -70,10 +70,10 @@ struct Sons
     int min;
     int sec;
     int freeSeats;
+    char seats[6][6];
 };
 struct Auditorium
 {
-    char seats[6][6];
     char movieName[100];
     struct Sons TodaySons[7];
 };
@@ -117,13 +117,16 @@ void auditoriumFill(struct Auditorium *Salon)
     date(time);
     todayDate(time,today);
     clockTime(time,&hour,&min,&sec);
-    for(int i = 0;i < 6;i++)
+    for(int k = 0;k < 7;k++)
     {
-        for(int j = 0;j < 6;j++)
+        for(int i = 0;i < 6;i++)
         {
-            Salon[0].seats[i][j] = '*';
-            Salon[1].seats[i][j] = '*';
-            Salon[2].seats[i][j] = '*';
+            for(int j = 0;j < 6;j++)
+            {
+                Salon[0].TodaySons[k].seats[i][j] = '*';
+                Salon[1].TodaySons[k].seats[i][j] = '*';
+                Salon[2].TodaySons[k].seats[i][j] = '*';
+            }
         }
     }
     strcpy(Salon[0].movieName,"The Green Mile");
@@ -143,9 +146,9 @@ void auditoriumFill(struct Auditorium *Salon)
         }
         else
         {
-            Salon[0].TodaySons[i].hour = 0;
-            Salon[1].TodaySons[i].hour = 0;
-            Salon[2].TodaySons[i].hour = 0;            
+            Salon[0].TodaySons[i].hour = -1;
+            Salon[1].TodaySons[i].hour = -1;
+            Salon[2].TodaySons[i].hour = -1;            
         }
         Salon[0].TodaySons[i].min = 0;
         Salon[1].TodaySons[i].min = 0;
@@ -168,7 +171,7 @@ void salonPrint(struct Auditorium *Salon,struct Movie *M,int numSalon)
     clockTime(time,&hour,&min,&sec);
     for(int i = 0; i < 7;i++)
     {
-        if(Salon[numSalon-1].TodaySons[i].hour != 0 )//&& Salon[numSalon-1].TodaySons[i].hour > hour)
+        if(Salon[numSalon-1].TodaySons[i].hour != -1 )//&& Salon[numSalon-1].TodaySons[i].hour > hour)
         {
             printf("\n\n<<<<<<<<<parde namayesh>>>>>>>>>\n");
             for(int j = 0;j < 6;j++)
@@ -176,7 +179,7 @@ void salonPrint(struct Auditorium *Salon,struct Movie *M,int numSalon)
                 printf("\t");
                 for(int k = 0;k < 6;k++)
                 {
-                    printf("%c  ",Salon[numSalon-1].seats[j][k]);
+                    printf("%c  ",Salon[numSalon-1].TodaySons[i].seats[j][k]);
                 }
                 printf("\n");
             }
@@ -189,13 +192,16 @@ void salonPrint(struct Auditorium *Salon,struct Movie *M,int numSalon)
         }
     }
 }
-struct Auditorium sonsSort(struct Auditorium Salon)
-{
-    
-}
 int sonsCheck(struct Sons AddedSons,struct Auditorium Salon)
 {
-
+    for(int i = 0;i < 7; i++)
+    {
+        if(AddedSons.hour > Salon.TodaySons[i].hour && AddedSons.hour < Salon.TodaySons[i].hour)
+        {
+            return 1;
+        }
+    }
+    return 0;
 }
 int main()
 {
@@ -206,6 +212,7 @@ int main()
     char today[100];
     int hour,min,sec;
     int trueOrFalse;
+    int sonsCounter = 3;
     date(time);
     todayDate(time,today);
     clockTime(time,&hour,&min,&sec);
@@ -222,32 +229,24 @@ int main()
         printf("shomare vared shode eshtebah ast\nshomare mored nazar:");
         scanf("%d",&state);
     } 
-    if(state == 1)
+    while(state != 3)
     {
-        int numSalon;
-        printf("1.salon 1  movie: The Green Mile\n");
-        printf("2.salon 2  movie: The prestige\n");
-        printf("3.salon 3  movie: shutter island\n");
-        printf("salone mored nazar: ");
-        scanf("%d",&numSalon);
-        while(numSalon != 1 && numSalon != 2 && numSalon != 3)
+        if(state == 1)
         {
-            printf("shomare vared shode eshtebah ast\nshomare mored nazar:");
+            int numSalon;
+            printf("1.salon 1  movie: The Green Mile\n");
+            printf("2.salon 2  movie: The prestige\n");
+            printf("3.salon 3  movie: shutter island\n");
+            printf("salone mored nazar: ");
             scanf("%d",&numSalon);
-        }         
-        Salon[numSalon - 1] = sonsSort(Salon[numSalon - 1]);
-        salonPrint(Salon,M,numSalon);
-        printf("sons khod ra ezafe konid:\ndate: %s\n",AddedSons.structDate);
-        printf("hour: ");
-        scanf("%d",&AddedSons.hour);
-        printf("min: ");
-        scanf("%d",&AddedSons.min);
-        printf("sec: ");
-        scanf("%d",&AddedSons.sec);
-        trueOrFalse = sonsCheck(AddedSons,Salon[numSalon-1]);
-        while(trueOrFalse == 0)
-        {
-            printf("sons ha tadakhod darand. sons jadid vared konid:\ndate: %s\n",AddedSons.structDate);
+            while(numSalon != 1 && numSalon != 2 && numSalon != 3)
+            {
+                printf("shomare vared shode eshtebah ast\nshomare mored nazar:");
+                scanf("%d",&numSalon);
+            }         
+            quicksort(Salon[numSalon-1].TodaySons,0,6);
+            salonPrint(Salon,M,numSalon);
+            printf("sons khod ra ezafe konid:\ndate: %s\n",AddedSons.structDate);
             printf("hour: ");
             scanf("%d",&AddedSons.hour);
             printf("min: ");
@@ -255,11 +254,55 @@ int main()
             printf("sec: ");
             scanf("%d",&AddedSons.sec);
             trueOrFalse = sonsCheck(AddedSons,Salon[numSalon-1]);
-        }        
-    }
-    else
-    {
+            while(trueOrFalse == 0)
+            {
+                printf("sons ha tadakhod darand. sons jadid vared konid:\ndate: %s\n",AddedSons.structDate);
+                printf("hour: ");
+                scanf("%d",&AddedSons.hour);
+                printf("min: ");
+                scanf("%d",&AddedSons.min);
+                printf("sec: ");
+                scanf("%d",&AddedSons.sec);
+                trueOrFalse = sonsCheck(AddedSons,Salon[numSalon-1]);
+            }
+            for(int i = 0; i < 7; i++)
+            {
+                if(Salon[numSalon-1].TodaySons[i].hour == -1)
+                {
+                    Salon[numSalon-1].TodaySons[i].hour = AddedSons.hour;
+                    Salon[numSalon-1].TodaySons[i].min = AddedSons.min;
+                    Salon[numSalon-1].TodaySons[i].sec = AddedSons.sec;
+                    sonsCounter++;
+                    break;
+                }
+            }
+            printf("1.Ezafe kardan sons\n2.kharide bilit\n3.payan\nshomare mored nazar: ");
+            scanf("%d",&state);
+            while(state != 1 && state != 2 && state != 3)
+            {
+                printf("shomare vared shode eshtebah ast\nshomare mored nazar:");
+                scanf("%d",&state);
+            }
+            if(state == 1)
+            {
+                if(sonsCounter >= 7)
+                {
+                    printf("sons ha por ast\n");    
+                    printf("2.kharide bilit\n3.payan\nshomare mored nazar: ");
+                    scanf("%d",&state);
+                    while(state != 2 && state != 3)
+                    {
+                        printf("shomare vared shode eshtebah ast\nshomare mored nazar:");
+                        scanf("%d",&state);
+                    }
+
+                }
+            }
+
+        }
+        else
+        {
     
+        }
     }
-    
 }

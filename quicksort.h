@@ -1,28 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-struct Sons
+struct Sons1
 {
     char structDate[200];
     int hour;
     int min;
     int sec;
     int freeSeats;
-};
-struct Auditorium
-{
     char seats[6][6];
-    char movieName[100];
-    struct Sons TodaySons[7];
 };
-void swap(struct Sons TodaySons[],int y,int x)
+struct Auditorium1
 {
-    struct Sons temp;
+
+    char movieName[100];
+    struct Sons1 TodaySons[7];
+};
+void swap(struct Sons1 TodaySons[],int y,int x)
+{
+    struct Sons1 temp;
     temp = TodaySons[x];
     TodaySons[x] = TodaySons[y];
     TodaySons[y] = temp;
 }
-int func(struct Sons TodaySons[], int start, int end)
+int func(struct Sons1 TodaySons[], int start, int end)
 {
     srand(time(NULL));
     int point = start + (rand()%(end - start));
@@ -56,7 +57,7 @@ int func(struct Sons TodaySons[], int start, int end)
     return (point - 1);
    
 }
-void quicksort(struct Sons TodaySons[], int start, int end)
+void quicksort(struct Sons1 TodaySons[], int start, int end)
 {
     int point;
     if(start < end)
