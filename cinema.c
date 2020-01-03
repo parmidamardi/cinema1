@@ -2,6 +2,7 @@
 #include <time.h>
 #include <string.h>
 #include <stdlib.h>
+#include "quicksort.h"
 void date(char time2[])
 {
     time_t current_time;
@@ -159,9 +160,15 @@ void auditoriumFill(struct Auditorium *Salon)
 }
 void salonPrint(struct Auditorium *Salon,struct Movie *M,int numSalon)
 {
+    char time[200];
+    char today[100];
+    int hour,min,sec;
+    date(time);
+    todayDate(time,today);
+    clockTime(time,&hour,&min,&sec);
     for(int i = 0; i < 7;i++)
     {
-        if(Salon[numSalon-1].TodaySons[i].hour != 0)
+        if(Salon[numSalon-1].TodaySons[i].hour != 0 )//&& Salon[numSalon-1].TodaySons[i].hour > hour)
         {
             printf("\n\n<<<<<<<<<parde namayesh>>>>>>>>>\n");
             for(int j = 0;j < 6;j++)
@@ -182,10 +189,27 @@ void salonPrint(struct Auditorium *Salon,struct Movie *M,int numSalon)
         }
     }
 }
+struct Auditorium sonsSort(struct Auditorium Salon)
+{
+    
+}
+int sonsCheck(struct Sons AddedSons,struct Auditorium Salon)
+{
+
+}
 int main()
 {
     struct Movie M[3];
     struct Auditorium Salon[3];
+    struct Sons AddedSons;
+    char time[200];
+    char today[100];
+    int hour,min,sec;
+    int trueOrFalse;
+    date(time);
+    todayDate(time,today);
+    clockTime(time,&hour,&min,&sec);
+    strcpy(AddedSons.structDate,time);
     auditoriumFill(Salon);
     M[0] = movieFill(M[0],0);
     M[1] = movieFill(M[1],1);
@@ -211,7 +235,27 @@ int main()
             printf("shomare vared shode eshtebah ast\nshomare mored nazar:");
             scanf("%d",&numSalon);
         }         
+        Salon[numSalon - 1] = sonsSort(Salon[numSalon - 1]);
         salonPrint(Salon,M,numSalon);
+        printf("sons khod ra ezafe konid:\ndate: %s\n",AddedSons.structDate);
+        printf("hour: ");
+        scanf("%d",&AddedSons.hour);
+        printf("min: ");
+        scanf("%d",&AddedSons.min);
+        printf("sec: ");
+        scanf("%d",&AddedSons.sec);
+        trueOrFalse = sonsCheck(AddedSons,Salon[numSalon-1]);
+        while(trueOrFalse == 0)
+        {
+            printf("sons ha tadakhod darand. sons jadid vared konid:\ndate: %s\n",AddedSons.structDate);
+            printf("hour: ");
+            scanf("%d",&AddedSons.hour);
+            printf("min: ");
+            scanf("%d",&AddedSons.min);
+            printf("sec: ");
+            scanf("%d",&AddedSons.sec);
+            trueOrFalse = sonsCheck(AddedSons,Salon[numSalon-1]);
+        }        
     }
     else
     {
