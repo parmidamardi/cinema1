@@ -44,6 +44,24 @@ void todayDate(char time[],char today[])
     }
     today[i] = '\0';
 }
+void clockTime(char time[],int *hour, int *min, int *sec)
+{
+   int cnt = 0;
+   for(int i = 0;cnt < 4;i++)
+   {
+      if(time[i] == ' ')
+      {
+          cnt++;
+      }
+      if(cnt == 3)
+      {
+          *hour = (time[i+1]-'0')*10 + (time[i+2]-'0');
+          *min = (time[i+4]-'0')*10 + (time[i+5]-'0');
+          *sec = (time[i+7]-'0')*10 + (time[i+8]-'0');
+          break;
+      }
+   }
+}
 struct Sons
 {
 
@@ -58,7 +76,10 @@ int main()
 {
     char time[200];
     char today[100];
+    int hour,min,sec;
     date(time);
     todayDate(time,today);
+    clockTime(time,&hour,&min,&sec);
+    printf("%d : %d : %d",hour,min,sec);
     //printf("%s",today);
 }
