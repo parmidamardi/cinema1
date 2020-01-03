@@ -157,6 +157,28 @@ void auditoriumFill(struct Auditorium *Salon)
         Salon[2].TodaySons[i].freeSeats = 36; 
     }
 }
+void salonPrint(struct Auditorium *Salon,int numSalon)
+{
+    for(int i = 0; i < 7;i++)
+    {
+        if(Salon[numSalon-1].TodaySons[i].hour != 0)
+        {
+            printf("\n\n<<<<<<<<<parde namayesh>>>>>>>>>\n");
+            for(int j = 0;j < 6;j++)
+            {
+                printf("\t");
+                for(int k = 0;k < 6;k++)
+                {
+                    printf("%c  ",Salon[numSalon-1].seats[j][k]);
+                }
+                printf("\n");
+            }
+            printf("%s\n",Salon[numSalon-1].TodaySons[i].structDate);
+            printf("saat: %d : %d : %d\n",Salon[numSalon-1].TodaySons[i].hour,Salon[numSalon-1].TodaySons[i].min,Salon[numSalon-1].TodaySons[i].sec);
+
+        }
+    }
+}
 int main()
 {
     struct Movie M[3];
@@ -165,6 +187,32 @@ int main()
     M[0] = movieFill(M[0],0);
     M[1] = movieFill(M[1],1);
     M[2] = movieFill(M[2],2);
-    //printf("%d : %d : %d",hour,min,sec);
-    //printf("%s",today);
+    int state;
+    printf("1.Ezafe kardan sons\n2.kharide bilit\nshomare mored nazar: ");
+    scanf("%d",&state);
+    while(state != 1 && state != 2)
+    {
+        printf("shomare vared shode eshtebah ast\nshomare mored nazar:");
+        scanf("%d",&state);
+    } 
+    if(state == 1)
+    {
+        int numSalon;
+        printf("1.salon 1  movie: The Green Mile\n");
+        printf("2.salon 2  movie: The prestige\n");
+        printf("3.salon 3  movie: shutter island\n");
+        printf("salone mored nazar: ");
+        scanf("%d",&numSalon);
+        while(numSalon != 1 && numSalon != 2 && numSalon != 3)
+        {
+            printf("shomare vared shode eshtebah ast\nshomare mored nazar:");
+            scanf("%d",&numSalon);
+        }         
+        salonPrint(Salon,numSalon);
+    }
+    else
+    {
+    
+    }
+    
 }
