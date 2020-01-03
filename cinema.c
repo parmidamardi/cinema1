@@ -76,6 +76,14 @@ struct Auditorium
     char movieName[100];
     struct Sons TodaySons[7];
 };
+struct movie
+{
+    char movieName[200];
+    int movieTime;
+    char summary[10000];
+    char movieJenre[100];
+};
+
 int main()
 {
     char time[200];
